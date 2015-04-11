@@ -37,7 +37,7 @@ class WebPageContent(object):
 
             # if there is content between the tags
             if html_tag.string:
-                content += tag.string+' '
+                content += html_tag.string+' '
 
         # using the html tag <title> as a source as well
         if soup.title:

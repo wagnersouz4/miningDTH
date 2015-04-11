@@ -13,7 +13,7 @@ class TF(object):
         self.tf_list = []
         term_visited = []
         for term in self.text.split(' '):
-            if term not in term_visited:
+            if term not in term_visited and self.isEnglish(term):
                 term_visited.append(term)
                 self.tf_list.append((term, 1 +
                                      log2(self.text.count(term))))
@@ -23,3 +23,11 @@ class TF(object):
 
     def topwords(self, nwords):
         return [x[0] for x in self.tf_list[:nwords]]
+
+    def isEnglish(self, word):
+        try:
+            word.encode('utf8').decode('ascii')
+        except UnicodeDecodeError:
+            return False
+        else:
+            return True

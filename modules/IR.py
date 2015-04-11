@@ -40,10 +40,7 @@ class IR:
 		try:
 			rq=request.urlopen(url)
 			jsontxt=rq.read()
-		except:
-			return jdict
-                    
-		try:	
+	
 			jsonobj=json.loads(jsontxt.decode('utf8'))
 			self.__title=jsonobj['title']
 			self.__explanation=jsonobj['explanation']

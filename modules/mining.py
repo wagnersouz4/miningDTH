@@ -1,6 +1,27 @@
 #!/bin/env python3
--*- coding: uft-8 -*-
+# -*- coding:utf-8 -*-
+
+import json
+from google_concept import GoogleConcept
+from tf import TF
 
 
-json = '{"concept_tags": true, "title": "NGC 2903: A Missing Jewel in Leo", "url": "http://apod.nasa.gov/apod/image/1504/N2903JewelofLeo_hallas_c1024.jpg", "explanation": "Barred spiral galaxy NGC 2903 is only some 20 million light-years distant. Popular among amateur astronomers, it shines in the northern spring constellation Leo, near the top of the lion's head. That part of the constellation is sometimes seen as a reversed question mark or sickle. One of the brighter galaxies visible from the northern hemisphere, NGC 2903 is surprisingly missing from Charles Messier's catalog of lustrous celestial sights. This colorful image from a small ground-based telescope shows off the galaxy's gorgeous spiral arms traced by young, blue star clusters and pinkish star forming regions. Included are intriguing details of NGC 2903's bright core, a remarkable mix of old and young clusters with immense dust and gas clouds. In fact, NGC 2903 exhibits an exceptional rate of star formation activity near its center, also bright in radio, infrared, ultraviolet, and x-ray bands. Just a little smaller than our own Milky Way, NGC 2903 is about 80,000 light-years across.", "concepts": {"0": "Milky Way", "1": "Spiral galaxy", "2": "Galaxy", "3": "Star", "4": "Nebula", "5": "Sun", "6": "Barred spiral galaxy", "7": "Astronomy"}, "date": "2015-04-10"}'
+class Mining(object):
+
+    def __init__(self, json_doc):
+        self.json_doc = json_doc
+        self.build()
+
+    def build(self):
+        print(self.json_doc['title'])
+        google_concept = GoogleConcept(self.json_doc['title'], pages_limit=15)
+        tf = TF(google_concept.content)
+        print(tf.topwords(3))
+
+
+
+url = 'https://api.data.gov/nasa/planetary/apod?concept_tags=True&api_key=nBU6LULSiOfryhokGBZVH6hvfu5I00WHZhtDFWLx&date=2015-04-10'
+from requests import get
+json = json.loads(get(url).text)
+m = Mining(json)
 

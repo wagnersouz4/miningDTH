@@ -13,6 +13,7 @@ class GoogleConcept(object):
         self.build()
 
     def build(self):
-        pages = list(search(self.text, stop=self.pages_limit))
+        pages = list(search(self.text, stop=self.pages_limit,
+                            lang="en"))
         pages_content = WebPageContent(pages)
         self.content = ' '.join(pages_content.pages_content_list)

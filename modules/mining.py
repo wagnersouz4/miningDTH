@@ -1,9 +1,10 @@
 #!/bin/env python3
 # -*- coding:utf-8 -*-
 
-import json
 from google_concept import GoogleConcept
 from tf import TF
+from IR import IR
+from datetime import date
 
 
 class Mining(object):
@@ -13,15 +14,15 @@ class Mining(object):
         self.build()
 
     def build(self):
-        print(self.json_doc['title'])
-        google_concept = GoogleConcept(self.json_doc['title'], pages_limit=15)
+        google_concept = GoogleConcept(self.json_doc['title'] + ' ' +
+                                       self.json_doc['explanation'],
+                                       pages_limit=15)
+
         tf = TF(google_concept.content)
         print(tf.topwords(3))
 
 
-
-url = 'https://api.data.gov/nasa/planetary/apod?concept_tags=True&api_key=nBU6LULSiOfryhokGBZVH6hvfu5I00WHZhtDFWLx&date=2015-04-10'
-from requests import get
-json = json.loads(get(url).text)
-m = Mining(json)
-
+if __name__ == '__main__':
+    # Building the thing
+    ir = IR()
+    m = Mining(ir.getInfo(date(2015, 4, 10)))

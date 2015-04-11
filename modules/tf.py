@@ -15,7 +15,8 @@ class TF(object):
         for term in self.text.split(' '):
             if term not in term_visited:
                 term_visited.append(term)
-                self.tf_list.append((term, 1 + log2(self.text.count(term))))
+                self.tf_list.append((term, 1 +
+                                     log2(self.text.count(term))))
 
         # ordering the list according to its tf value
         self.tf_list.sort(key=lambda x: float(x[1]), reverse=True)

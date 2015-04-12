@@ -1,18 +1,65 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<head>
-    <title>miningDTH</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-</head>
+    <title>MiningDTH - Pyrry</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css" real="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
+"
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
 <body>
-    <h1>MiningDTH</h1>
-    <p>Description</p>
-    <div class="form">
-        Select a date below <input id="apod-date" type="text">
-        <a class="btn btn-primary" herf="#" onclick="create_chart()">View Chart</a>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#"><img src="{{ url_for('static', filename='perry.png') }}" style="width:80px;height:80px"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <h1>miningDTH: <small>Mining the Astronomy Picture of the Day</small></h1><small class="navbar-right">---by Parry Team</small>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
     </div>
-    <div id="apod-chart"></div>
+        <div id="hello">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 centered">
+
+                        <div class="form-group" style="display:inline; text-align:center;">
+                            <input id="apod-date" class="form-control" placeholder="SELECT A DATE" type="text" style="display:inline; width:200px;">
+                            <a class="btn btn-warning" herf="#" onclick="create_chart()">
+                            <span style="display:inline;">
+                                <i class="fa fa-bar-chart fa-1x" id="i-edit-profile" ></i>
+                                View Chart
+                            </span>
+                            </a>
+                        </div>
+                        <div id="apod-chart">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
@@ -34,6 +81,7 @@
                 .size([diameter, diameter])
                 .padding(1.5);
             $("#apod-chart").empty();
+            $("#apod-chart").append('<i class="fa fa-spin fa-spinner fa-2x" id="i-spinner" ></i>');
 
             var svg = d3.select("#apod-chart").append("svg")
                 .attr("width", diameter)
@@ -41,6 +89,8 @@
                 .attr("class", "bubble");
 
             d3.json('http://127.0.0.1:8080/_getjson?date='+$('#apod-date').val(), function(error, root) {
+            $("#i-spinner").remove();
+
               var node = svg.selectAll(".node")
                   .data(bubble.nodes(classes(root))
                   .filter(function(d) { return !d.children; }))

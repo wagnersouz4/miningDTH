@@ -1,0 +1,27 @@
+ {
+ "name": "flare",
+ "children": [
+  {
+   "name": "analytics",
+   "children": [
+    {
+     "name": "cluster",
+     "children": [
+      {"name": "AgglomerativeCluster", "size": 10}
+     ]
+    }]
+  },  {
+   "name": "analytics",
+   "children": [
+    {
+     "name": "cluster",
+     "children": [
+      {"name": "AgglomerativeCluster", "size": 10}
+     ]
+    }]
+  }
+
+  ]
+
+  }
+

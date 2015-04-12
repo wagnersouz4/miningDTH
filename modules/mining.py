@@ -11,7 +11,6 @@ class Mining(object):
 
     def __init__(self, json_doc):
         self.json_doc = json_doc
-        
 
     def build(self):
         google_concept = GoogleConcept(self.json_doc['title'] + ' ' +

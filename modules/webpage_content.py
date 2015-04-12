@@ -25,8 +25,9 @@ class WebPageContent(object):
 
                 # if the data was obtained successfully
                 if soup:
-                    self.pages_content_list.append(
-                        self.main_soup_content(soup))
+                    text = self.main_soup_content(soup)
+                    if text.__class__ == str:
+                        self.pages_content_list.append(text)
 
     def main_soup_content(self, soup):
         content = ''
@@ -42,7 +43,6 @@ class WebPageContent(object):
         # using the html tag <title> as a source as well
         if soup.title:
             content += soup.title.string+' '
-
         return self.clean_text(content)
 
     def clean_text(self, text):
@@ -69,6 +69,7 @@ class WebPageContent(object):
         stop = stopwords.words('english')
         return ' '.join([t for t in word_tokenize(text) if t not in stop])
 
+    #create a duty tagger
     def meaning_words(self, text):
 
         # meaning tags nouns and adjective only
@@ -83,6 +84,6 @@ class WebPageContent(object):
             return the whole text
         '''
         if not meaning_words:
-            return text.split(' ')
+            return None
         else:
             return meaning_words
